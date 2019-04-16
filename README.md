@@ -21,6 +21,6 @@ dependencies {
 
 - Used Architecture Pattern in app **MVVM**
 - Consist of **Models**, **ViewModels** & **View** structure
-- Wiki API's are used for fetching images from server and display them in grid
+- Wiki API's are used for fetching images from server using **RETROFIT** and display them in grid
 using **Glide** library
 - Used data binding for avoiding the boiler plate dependency 
