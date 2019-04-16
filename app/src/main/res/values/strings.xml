@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Wiki Search</string>
+    <string name="title_detail_screen">Search Details</string>
+
+    <string name="no_internet_message">No internet. Please check your internet connection and try again.</string>
+    <string name="connection_timeout_message">Connection timeout. Please try again later.</string>
+    <string name="something_is_not_working_message">Something is not working. Please try again later.</string>
+    <string name="enter_your_search">Enter Your Search</string>
+    <string name="hint_search">Search wiki pages…</string>
+    <string name="title_search">Search</string>
+    <string name="toast_please_enter_text">Please enter the text!</string>
+    <string name="loader_loading">Loading Images…</string>
+    <string name="button_ok">OK</string>
+    <string name="no_records">No records found\nPlease retry with some other text !</string>
+</resources>
