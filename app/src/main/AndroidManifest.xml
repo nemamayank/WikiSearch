@@ -28,7 +28,12 @@
         <!-- Activity Used In The App -->
         <activity
             android:name=".views.SearchWikiImageDetails"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_detail_screen"
+            android:screenOrientation="portrait" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="views.SearchWikiActivity" />
+        </activity>
     </application>
 
 </manifest>

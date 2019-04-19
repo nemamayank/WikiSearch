@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="GridItemBindings">
 
         <variable
-            name="searchModel"
-            type="com.mayank.wikisearch.models.viewmodels.SearchWikiViewModel" />
+            name="gridModel"
+            type="com.mayank.wikisearch.models.GridItemModel" />
 
         <variable
             name="handler"
@@ -29,6 +30,7 @@
                 android:id="@+id/ivGridImageItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:itemUrl="@{gridModel.itemUrl}"
                 tools:src="@drawable/ic_launcher_foreground" />
         </LinearLayout>
     </LinearLayout>

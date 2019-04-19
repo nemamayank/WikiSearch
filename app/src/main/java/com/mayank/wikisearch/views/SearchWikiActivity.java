@@ -23,18 +23,20 @@ import com.mayank.wikisearch.utilities.DialogUtils;
 import com.mayank.wikisearch.utilities.IGridItemClickListener;
 import com.mayank.wikisearch.utilities.Utils;
 
+import java.util.ArrayList;
+
 /**
  * SearchWikiActivity Class is responsible / features the SEARCH entered by the user,
  * - Communicate to the network layer for queried data
- *   and on success {@link #onGetWikiSearchSuccess} else {@link #onGetWikiSearchFailure(AppError)}
+ * and on success {@link #onGetWikiSearchSuccess} else {@link #onGetWikiSearchFailure(AppError)}
  * - Display the parsed data into GridLayout
- * - Modifies the search if queried again into SearchView {@link #onSearchTextSubmitted(String)}
+ * - Modifies the search if queried again into SearchView
  * - On Click to any item show's the detail view {@link SearchWikiImageDetails}
  */
 
 public class SearchWikiActivity extends AppCompatActivity implements GetWikiSearchController.GetWikiSearchListener, IGridItemClickListener {
-    private static final String TAG = SearchWikiActivity.class.getSimpleName();
     private SearchWikiBindings mBindings;
+    private RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +52,7 @@ public class SearchWikiActivity extends AppCompatActivity implements GetWikiSear
         mBindings.rvImageList.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
-    private void onSearchTextSubmitted(String query) {
-        callAPI(1000, query.trim());
-    }
-
-    public void callAPI(int piThumbSize, String searchText) {
+    private void callAPI(int piThumbSize, String searchText) {
         DialogUtils.showProgressLoader(SearchWikiActivity.this, R.string.loader_loading);
         GetWikiSearchController<WikiSearchModel> getWikiSearchController = new GetWikiSearchController<>(WikiSearchModel.class, this);
         getWikiSearchController.requestWikiSearch(piThumbSize, searchText);
@@ -67,14 +65,21 @@ public class SearchWikiActivity extends AppCompatActivity implements GetWikiSear
          * Checking if list has data
          * Setting the Adapter for parsed image list from server
          **/
-        if(mBindings.getSearchModel().getImageList(response).isEmpty()){
+        if (mBindings.getSearchModel().getImageList(response).isEmpty()) {
             Utils.showFailureMessage(this, getString(R.string.no_records));
         }
-        mBindings.rvImageList.setAdapter(new RecyclerViewAdapter(this, mBindings.getSearchModel().getImageList(response), SearchWikiActivity.this));
+
+        if (recyclerViewAdapter == null) {
+            recyclerViewAdapter = new RecyclerViewAdapter(mBindings.getSearchModel().getImageList(response), SearchWikiActivity.this);
+            mBindings.rvImageList.setAdapter(recyclerViewAdapter);
+        } else {
+            recyclerViewAdapter.updateGridList(mBindings.getSearchModel().getImageList(response));
+        }
     }
 
     @Override
     public void onGetWikiSearchFailure(AppError error) {
+        recyclerViewAdapter.updateGridList(new ArrayList<String>());
         Utils.showNetworkFailureError(this, error);
     }
 
@@ -104,7 +109,7 @@ public class SearchWikiActivity extends AppCompatActivity implements GetWikiSear
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                onSearchTextSubmitted(query);
+                callAPI(1000, query.trim());
                 return false;
             }
 

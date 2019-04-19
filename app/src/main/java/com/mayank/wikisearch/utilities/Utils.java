@@ -17,7 +17,7 @@ import com.mayank.wikisearch.network.AppError;
 
 /**
  * - This class contains all the method(s) commonly used
- *   across the application
+ * across the application
  * - Also includes constant variables used across the app
  */
 public class Utils {
