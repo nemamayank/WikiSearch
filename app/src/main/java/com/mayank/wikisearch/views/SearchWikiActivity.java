@@ -22,8 +22,6 @@ import com.mayank.wikisearch.utilities.DialogUtils;
 import com.mayank.wikisearch.utilities.IGridItemClickListener;
 import com.mayank.wikisearch.utilities.Utils;
 
-import java.util.ArrayList;
-
 /**
  * SearchWikiActivity Class is responsible / features the SEARCH entered by the user,
  * - Communicate to the network layer for queried data
@@ -81,7 +79,6 @@ public class SearchWikiActivity extends AppCompatActivity implements GetWikiSear
     @Override
     public void onGetWikiSearchFailure(AppError error) {
         Utils.setEmptyView(mBindings.ivNoResultBg,true);
-        recyclerViewAdapter.updateGridList(new ArrayList<String>());
         Utils.showNetworkFailureError(this, error);
     }
 
