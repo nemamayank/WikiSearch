@@ -8,11 +8,7 @@
             name="gridModel"
             type="com.mayank.wikisearch.models.GridItemModel" />
 
-        <variable
-            name="handler"
-            type="android.view.View.OnClickListener" />
     </data>
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -23,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{handler::onClick}"
+            android:onClick="@{() -> gridModel.IGridItemClickListener.onGridItemClickListener(gridModel.position,gridModel.itemUrl)}"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatImageView

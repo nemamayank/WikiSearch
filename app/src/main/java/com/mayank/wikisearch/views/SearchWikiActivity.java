@@ -11,7 +11,6 @@ import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 
 import com.mayank.wikisearch.R;
 import com.mayank.wikisearch.controller.GetWikiSearchController;
@@ -60,12 +59,14 @@ public class SearchWikiActivity extends AppCompatActivity implements GetWikiSear
 
     @Override
     public void onGetWikiSearchSuccess(Object response) {
+        Utils.setEmptyView(mBindings.ivNoResultBg,false);
         DialogUtils.hideLoader();
         /**
          * Checking if list has data
          * Setting the Adapter for parsed image list from server
          **/
         if (mBindings.getSearchModel().getImageList(response).isEmpty()) {
+            Utils.setEmptyView(mBindings.ivNoResultBg,true);
             Utils.showFailureMessage(this, getString(R.string.no_records));
         }
 
@@ -79,12 +80,13 @@ public class SearchWikiActivity extends AppCompatActivity implements GetWikiSear
 
     @Override
     public void onGetWikiSearchFailure(AppError error) {
+        Utils.setEmptyView(mBindings.ivNoResultBg,true);
         recyclerViewAdapter.updateGridList(new ArrayList<String>());
         Utils.showNetworkFailureError(this, error);
     }
 
     @Override
-    public void onGridItemClickListener(View view, int position, String url) {
+    public void onGridItemClickListener(int position, String url) {
         if (!TextUtils.isEmpty(url)) {
             Intent goDetails = new Intent(SearchWikiActivity.this, SearchWikiImageDetails.class);
             goDetails.putExtra(Utils.Intent.IMAGE_URL, url);

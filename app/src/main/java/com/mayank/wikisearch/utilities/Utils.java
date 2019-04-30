@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -130,5 +131,13 @@ public class Utils {
                 dialog.dismiss();
             }
         });
+    }
+
+    /**
+     * Showing failure dialog with custom message
+     **/
+    public static void setEmptyView(View view, boolean setView) {
+        if (setView) view.setVisibility(View.VISIBLE);
+        else view.setVisibility(View.GONE);
     }
 }

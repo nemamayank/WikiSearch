@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.mayank.wikisearch.R;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<String> mListItems;
     private IGridItemClickListener mIGridItemClickListener;
+    private static final int VIEW_TYPE_ITEMS = 0;
+    private static final int VIEW_TYPE_EMPTY = 1;
 
     /**
      * Reference, Data & Listener is passed into the constructor
@@ -31,17 +32,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mIGridItemClickListener = IGridItemClickListener;
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        GridItemBindings binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.adapter_grid_item, parent, false);
-        return new GridViewHolder(binding);
+        RecyclerView.ViewHolder viewHolder = null;
+        switch (viewType) {
+            case VIEW_TYPE_ITEMS: {
+                GridItemBindings binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                        R.layout.adapter_grid_item, parent, false);
+                viewHolder =  new GridViewHolder(binding);
+                break;
+            }
+        }
+        return viewHolder;
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (!mListItems.get(position).isEmpty()) {
-            ((GridViewHolder) holder).mBinding.setGridModel(new GridItemModel(mListItems.get(position)));
+                if (!mListItems.get(position).isEmpty()) {
+                    GridViewHolder mHolder = ((GridViewHolder) holder);
+                    mHolder.mBinding.setGridModel(new GridItemModel(mIGridItemClickListener, mListItems.get(position), position));
         }
     }
 
@@ -58,22 +69,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mListItems.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (mListItems == null || mListItems.size() == 0) {
+            return VIEW_TYPE_EMPTY;
+        } else {
+            return VIEW_TYPE_ITEMS;
+        }
+    }
+
     /**
      * Assign grid item bindings to the ViewHolder (Excluding boiler plate dependency)
      **/
-    private class GridViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class GridViewHolder extends RecyclerView.ViewHolder {
         private final GridItemBindings mBinding;
 
         private GridViewHolder(GridItemBindings binding) {
             super(binding.getRoot());
             this.mBinding = binding;
-            this.mBinding.setHandler(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mIGridItemClickListener != null)
-                mIGridItemClickListener.onGridItemClickListener(view, getAdapterPosition(), mListItems.get(getAdapterPosition()));
         }
     }
 }

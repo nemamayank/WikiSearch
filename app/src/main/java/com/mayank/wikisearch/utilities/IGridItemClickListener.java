@@ -1,7 +1,5 @@
 package com.mayank.wikisearch.utilities;
 
-import android.view.View;
-
 /**
  * This listener is responsible for handling the itemClick event in adapter
  * and give the callback to the implementing class:
@@ -10,5 +8,5 @@ import android.view.View;
  */
 
 public interface IGridItemClickListener {
-    void onGridItemClickListener(View view, int position, String imageUrl);
+    void onGridItemClickListener(int position, String imageUrl);
 }

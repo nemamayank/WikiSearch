@@ -3,6 +3,7 @@ package com.mayank.wikisearch.models.viewmodels;
 import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 
 import com.mayank.wikisearch.databinding.SearchWikiBindings;
@@ -55,5 +56,15 @@ public class SearchWikiViewModel extends BaseViewModel<SearchWikiBindings> {
         } else {
             Utils.showErrorImage(imageView.getContext(), imageView);
         }
+    }
+
+    @BindingAdapter("query")
+    public static void setQuery(SearchView searchView, String queryText) {
+        searchView.setQuery(queryText, false);
+    }
+
+    @BindingAdapter("queryTextListener")
+    public static void setOnQueryTextListener(SearchView searchView, SearchView.OnQueryTextListener listener) {
+        searchView.setOnQueryTextListener(listener);
     }
 }
