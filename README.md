@@ -1,6 +1,6 @@
 # Wiki Search
 - Application to display images into gridlayout from wiki pages
-- Shows the detail image of search content
+- Shows the detail image of searched content
 
 **How To Add Dependency Used In Project**
 
@@ -19,8 +19,8 @@ dependencies {
 }
 ```
 
-- Used Architecture Pattern in app **MVVM**
-- Consist of **Models**, **ViewModels** & **View** structure
+- Used **MVVM** Architecture in the app 
+- Consist of **Models**, **ViewModels** & **View** hierarchy
 - Wiki API's are used for fetching images from server using **Retrofit** and display them in grid
 using **Glide** library
 - Used data binding for avoiding the boiler plate dependency 
